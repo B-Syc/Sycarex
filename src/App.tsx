@@ -33,6 +33,16 @@ function App() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
+  const scrollToForm = () => {
+    const formSection = document.getElementById('consultation-form');
+    if (formSection) {
+      formSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
@@ -104,7 +114,10 @@ function App() {
             </p>
             
             <div className="pt-8">
-              <button className="group relative px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-medium rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/25">
+              <button 
+                onClick={scrollToForm}
+                className="group relative px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-medium rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/25"
+              >
                 <span className="relative z-10 flex items-center gap-3">
                   Book a Free Consultation
                   <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
@@ -368,7 +381,7 @@ function App() {
       </div>
 
       {/* Consultation Form */}
-      <section className="relative py-32 px-6 lg:px-8">
+      <section id="consultation-form" className="relative py-32 px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-thin mb-6">
