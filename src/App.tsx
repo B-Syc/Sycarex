@@ -388,7 +388,7 @@ function App() {
                   <CheckCircle className="w-6 h-6 text-green-400" />
                   <div>
                     <h3 className="text-lg font-medium text-green-400">Request Submitted Successfully!</h3>
-                    <p className="text-green-300 mt-1">We'll get back to you within 24 hours to schedule your consultation.</p>
+                    <p className="text-green-300 mt-1">We'll get back to you as soon as possible to schedule your consultation.</p>
                   </div>
                 </div>
               </div>
