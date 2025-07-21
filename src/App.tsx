@@ -193,7 +193,7 @@ function App() {
               </div>
               <h3 className="text-2xl font-medium mb-4 text-green-400">Reduce Costs</h3>
               <p className="text-gray-300 leading-relaxed">
-                Cut operational expenses by up to 60% while maintaining or improving service quality and output.
+                Cut operational expenses substantially while maintaining or improving service quality and output.
               </p>
             </div>
             
