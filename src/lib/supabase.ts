@@ -17,7 +17,7 @@ export type Database = {
           id: string;
           name: string;
           email: string;
-          business_needs: string;
+          business_description: string;
           status: 'pending' | 'contacted' | 'scheduled' | 'completed' | 'cancelled';
           created_at: string;
           updated_at: string;
@@ -26,7 +26,7 @@ export type Database = {
           id?: string;
           name: string;
           email: string;
-          business_needs: string;
+          business_description: string;
           status?: 'pending' | 'contacted' | 'scheduled' | 'completed' | 'cancelled';
           created_at?: string;
           updated_at?: string;
@@ -35,7 +35,7 @@ export type Database = {
           id?: string;
           name?: string;
           email?: string;
-          business_needs?: string;
+          business_description?: string;
           status?: 'pending' | 'contacted' | 'scheduled' | 'completed' | 'cancelled';
           created_at?: string;
           updated_at?: string;

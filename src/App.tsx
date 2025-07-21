@@ -28,7 +28,7 @@ function App() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    businessNeeds: ''
+    businessDescription: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
@@ -52,7 +52,7 @@ function App() {
         .insert({
           name: formData.name,
           email: formData.email,
-          business_needs: formData.businessNeeds,
+          business_description: formData.businessDescription,
         });
 
       if (error) {
@@ -61,6 +61,7 @@ function App() {
 
       setSubmitStatus('success');
       setFormData({ name: '', email: '', businessNeeds: '' });
+      setFormData({ name: '', email: '', businessDescription: '' });
     } catch (error) {
       console.error('Error submitting consultation request:', error);
       setSubmitStatus('error');
@@ -444,17 +445,17 @@ function App() {
             </div>
             
             <div className="group">
-              <label htmlFor="businessNeeds" className="block text-sm font-medium text-gray-300 mb-3">
-                Business Needs
+              <label htmlFor="businessDescription" className="block text-sm font-medium text-gray-300 mb-3">
+                Business Description
               </label>
               <textarea
-                id="businessNeeds"
-                name="businessNeeds"
-                value={formData.businessNeeds}
+                id="businessDescription"
+                name="businessDescription"
+                value={formData.businessDescription}
                 onChange={handleInputChange}
                 rows={6}
                 className="w-full px-6 py-4 bg-gray-900/50 border border-gray-700 rounded-xl text-white placeholder-gray-400 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 focus:outline-none transition-all duration-300 group-hover:border-gray-600 resize-none disabled:opacity-50 disabled:cursor-not-allowed"
-                placeholder="Tell us about your business and automation goals..."
+                placeholder="Describe your business, industry, and current challenges..."
                 disabled={isSubmitting}
                 required
               />
