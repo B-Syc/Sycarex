@@ -92,15 +92,17 @@ function App() {
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center px-6 lg:px-8">
         {/* Spline Animation Background */}
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 overflow-hidden">
           <spline-viewer 
             url="https://prod.spline.design/BkCqmvmELKUnlUes/scene.splinecode"
-            className="w-full h-full opacity-30"
+            className="w-full h-full opacity-60"
           ></spline-viewer>
+          {/* Overlay to reduce text overlap */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/40"></div>
         </div>
         
         <div className="max-w-7xl mx-auto text-center">
-          <div className="relative z-10 space-y-8">
+          <div className="relative z-20 space-y-8">
             <div className="mb-8">
               <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
                 Sycarex AI
