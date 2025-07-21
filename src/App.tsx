@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { supabase } from './lib/supabase';
 import { 
   Bot, 
   MessageCircle, 
@@ -29,6 +30,8 @@ function App() {
     email: '',
     businessNeeds: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -37,10 +40,33 @@ function App() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Handle form submission logic here
+    
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    
+    try {
+      const { error } = await supabase
+        .from('consultations')
+        .insert({
+          name: formData.name,
+          email: formData.email,
+          business_needs: formData.businessNeeds,
+        });
+
+      if (error) {
+        throw error;
+      }
+
+      setSubmitStatus('success');
+      setFormData({ name: '', email: '', businessNeeds: '' });
+    } catch (error) {
+      console.error('Error submitting consultation request:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -355,6 +381,32 @@ function App() {
           </div>
           
           <form onSubmit={handleSubmit} className="space-y-8">
+            {submitStatus === 'success' && (
+              <div className="p-6 bg-green-500/10 border border-green-500/30 rounded-xl">
+                <div className="flex items-center gap-3">
+                  <CheckCircle className="w-6 h-6 text-green-400" />
+                  <div>
+                    <h3 className="text-lg font-medium text-green-400">Request Submitted Successfully!</h3>
+                    <p className="text-green-300 mt-1">We'll get back to you within 24 hours to schedule your consultation.</p>
+                  </div>
+                </div>
+              </div>
+            )}
+            
+            {submitStatus === 'error' && (
+              <div className="p-6 bg-red-500/10 border border-red-500/30 rounded-xl">
+                <div className="flex items-center gap-3">
+                  <div className="w-6 h-6 rounded-full bg-red-500 flex items-center justify-center">
+                    <span className="text-white text-sm font-bold">!</span>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-medium text-red-400">Submission Failed</h3>
+                    <p className="text-red-300 mt-1">Please try again or contact us directly at baher.kherbek@sycarex.com</p>
+                  </div>
+                </div>
+              </div>
+            )}
+            
             <div className="grid md:grid-cols-2 gap-8">
               <div className="group">
                 <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-3">
@@ -366,8 +418,9 @@ function App() {
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
-                  className="w-full px-6 py-4 bg-gray-900/50 border border-gray-700 rounded-xl text-white placeholder-gray-400 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 focus:outline-none transition-all duration-300 group-hover:border-gray-600"
+                  className="w-full px-6 py-4 bg-gray-900/50 border border-gray-700 rounded-xl text-white placeholder-gray-400 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 focus:outline-none transition-all duration-300 group-hover:border-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
                   placeholder="Enter your full name"
+                  disabled={isSubmitting}
                   required
                 />
               </div>
@@ -382,8 +435,9 @@ function App() {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="w-full px-6 py-4 bg-gray-900/50 border border-gray-700 rounded-xl text-white placeholder-gray-400 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 focus:outline-none transition-all duration-300 group-hover:border-gray-600"
+                  className="w-full px-6 py-4 bg-gray-900/50 border border-gray-700 rounded-xl text-white placeholder-gray-400 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 focus:outline-none transition-all duration-300 group-hover:border-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
                   placeholder="Enter your email address"
+                  disabled={isSubmitting}
                   required
                 />
               </div>
@@ -399,8 +453,9 @@ function App() {
                 value={formData.businessNeeds}
                 onChange={handleInputChange}
                 rows={6}
-                className="w-full px-6 py-4 bg-gray-900/50 border border-gray-700 rounded-xl text-white placeholder-gray-400 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 focus:outline-none transition-all duration-300 group-hover:border-gray-600 resize-none"
+                className="w-full px-6 py-4 bg-gray-900/50 border border-gray-700 rounded-xl text-white placeholder-gray-400 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 focus:outline-none transition-all duration-300 group-hover:border-gray-600 resize-none disabled:opacity-50 disabled:cursor-not-allowed"
                 placeholder="Tell us about your business and automation goals..."
+                disabled={isSubmitting}
                 required
               />
             </div>
@@ -408,11 +463,21 @@ function App() {
             <div className="text-center pt-4">
               <button
                 type="submit"
-                className="group relative px-12 py-4 bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-medium rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/25"
+                disabled={isSubmitting}
+                className="group relative px-12 py-4 bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-medium rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/25 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
                 <span className="relative z-10 flex items-center gap-3">
-                  Schedule Consultation
-                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                      Submitting...
+                    </>
+                  ) : (
+                    <>
+                      Schedule Consultation
+                      <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                    </>
+                  )}
                 </span>
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </button>
