@@ -95,14 +95,14 @@ function App() {
         <div className="absolute inset-0 z-0 overflow-hidden">
           <spline-viewer 
             url="https://prod.spline.design/BkCqmvmELKUnlUes/scene.splinecode"
-            className="w-full h-full opacity-90"
+            className="w-full h-full opacity-30"
           ></spline-viewer>
           {/* Light overlay only behind text areas */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/20"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/40"></div>
         </div>
         
         <div className="max-w-7xl mx-auto text-center">
-          <div className="relative z-20 space-y-8 bg-black/30 backdrop-blur-sm rounded-3xl p-8 mx-4">
+          <div className="relative z-20 space-y-8">
             <div className="mb-8">
               <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
                 Sycarex AI
