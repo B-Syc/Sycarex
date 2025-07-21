@@ -91,8 +91,16 @@ function App() {
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center px-6 lg:px-8">
+        {/* Spline Animation Background */}
+        <div className="absolute inset-0 z-0">
+          <spline-viewer 
+            url="https://prod.spline.design/BkCqmvmELKUnlUes/scene.splinecode"
+            className="w-full h-full opacity-30"
+          ></spline-viewer>
+        </div>
+        
         <div className="max-w-7xl mx-auto text-center">
-          <div className="space-y-8">
+          <div className="relative z-10 space-y-8">
             <div className="mb-8">
               <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
                 Sycarex AI
