@@ -455,7 +455,7 @@ function App() {
                 onChange={handleInputChange}
                 rows={6}
                 className="w-full px-6 py-4 bg-gray-900/50 border border-gray-700 rounded-xl text-white placeholder-gray-400 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 focus:outline-none transition-all duration-300 group-hover:border-gray-600 resize-none disabled:opacity-50 disabled:cursor-not-allowed"
-                placeholder="Describe your business, industry, and current challenges..."
+                placeholder="Describe your business/industry and add a website link if available..."
                 disabled={isSubmitting}
                 required
               />
